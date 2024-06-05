@@ -107,13 +107,8 @@ affinity: {}
 nginx:
   replicas: 2
   image:
-<<<<<<< HEAD
     repository: elysiansky/capstone-vulnerable-nginx
     tag: 701e85c-amd64
-=======
-    repository: capstone-vulnerable-nginx
-    tag: 451cdca-amd64
->>>>>>> 2f1515ebc2d2f1baa5d3b9ebdfe9dd96e2424fa7
   service:
     type: ClusterIP
   resources:
@@ -127,13 +122,8 @@ nginx:
 php:
   replicas: 2
   image:
-<<<<<<< HEAD
     repository: elysiansky/capstone-vulnerable-php83
     tag: 701e85c-amd64
-=======
-    repository: capstone-vulnerable-php83
-    tag: 451cdca-amd64
->>>>>>> 2f1515ebc2d2f1baa5d3b9ebdfe9dd96e2424fa7
   service:
     type: ClusterIP
   resources:
