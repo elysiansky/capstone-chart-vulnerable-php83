@@ -1,68 +1,57 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "capstone-chart-vulnerable-php83.fullname" . }}
+  name: {{ include "capstone-chart-vulnerable-php83.fullname" . }}-nginx
   labels:
-    {{- include "capstone-chart-vulnerable-php83.labels" . | nindent 4 }}
+    app: {{ include "capstone-chart-vulnerable-php83.name" . }}
+    chart: {{ include "capstone-chart-vulnerable-php83.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: {{ .Values.nginx.replicas }}
   selector:
     matchLabels:
-      {{- include "capstone-chart-vulnerable-php83.selectorLabels" . | nindent 6 }}
+      app: {{ include "capstone-chart-vulnerable-php83.name" . }}
+      release: {{ .Release.Name }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "capstone-chart-vulnerable-php83.labels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        app: {{ include "capstone-chart-vulnerable-php83.name" . }}
+        release: {{ .Release.Name }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "capstone-chart-vulnerable-php83.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - name: nginx
+          image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
-          livenessProbe:
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
-          readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
+            - containerPort: 80
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+            {{- toYaml .Values.nginx.resources | nindent 12 }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "capstone-chart-vulnerable-php83.fullname" . }}-php
+  labels:
+    app: {{ include "capstone-chart-vulnerable-php83.name" . }}
+    chart: {{ include "capstone-chart-vulnerable-php83.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.php.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "capstone-chart-vulnerable-php83.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "capstone-chart-vulnerable-php83.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: php
+          image: "{{ .Values.php.image.repository }}:{{ .Values.php.image.tag }}"
+          ports:
+            - containerPort: 9000
+          resources:
+            {{- toYaml .Values.php.resources | nindent 12 }}
