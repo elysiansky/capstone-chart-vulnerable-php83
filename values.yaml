@@ -1,6 +1,6 @@
 # Default values for capstone-chart.
 
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: nginx
@@ -79,8 +79,8 @@ readinessProbe:
     port: http
 
 autoscaling:
-  enabled: false
-  minReplicas: 1
+  enabled: true
+  minReplicas: 2
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
@@ -105,10 +105,10 @@ tolerations: []
 affinity: {}
 
 nginx:
-  replicas: 1
+  replicas: 2
   image:
-    repository: capstone-vulnerable-nginx
-    tag: latest
+    repository: elysiansky/capstone-vulnerable-nginx
+    tag: 701e85c-amd64
   service:
     type: ClusterIP
   resources:
@@ -120,10 +120,10 @@ nginx:
       memory: 128Mi
 
 php:
-  replicas: 1
+  replicas: 2
   image:
-    repository: capstone-vulnerable-php83
-    tag: latest
+    repository: elysiansky/capstone-vulnerable-php83
+    tag: 701e85c-amd64
   service:
     type: ClusterIP
   resources:

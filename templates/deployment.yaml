@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "capstone-chart-vulnerable-php83.fullname" . }}-nginx
+  name: {{ include "capstone-chart-vulnerable-php83.fullname" . }}
   labels:
     app: {{ include "capstone-chart-vulnerable-php83.name" . }}
     chart: {{ include "capstone-chart-vulnerable-php83.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.nginx.replicas }}
+  replicas: {{ .Values.replicas }}  # Assuming both Nginx and php-fpm have the same replica count
   selector:
     matchLabels:
       app: {{ include "capstone-chart-vulnerable-php83.name" . }}
@@ -20,38 +20,22 @@ spec:
         release: {{ .Release.Name }}
     spec:
       containers:
-        - name: nginx
-          image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
-          ports:
-            - containerPort: 80
-          resources:
-            {{- toYaml .Values.nginx.resources | nindent 12 }}
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ include "capstone-chart-vulnerable-php83.fullname" . }}-php
-  labels:
-    app: {{ include "capstone-chart-vulnerable-php83.name" . }}
-    chart: {{ include "capstone-chart-vulnerable-php83.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-spec:
-  replicas: {{ .Values.php.replicas }}
-  selector:
-    matchLabels:
-      app: {{ include "capstone-chart-vulnerable-php83.name" . }}
-      release: {{ .Release.Name }}
-  template:
-    metadata:
-      labels:
-        app: {{ include "capstone-chart-vulnerable-php83.name" . }}
-        release: {{ .Release.Name }}
-    spec:
-      containers:
-        - name: php
-          image: "{{ .Values.php.image.repository }}:{{ .Values.php.image.tag }}"
-          ports:
-            - containerPort: 9000
-          resources:
-            {{- toYaml .Values.php.resources | nindent 12 }}
+      - name: nginx
+        image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
+        ports:
+        - containerPort: 80
+        resources:
+          {{- toYaml .Values.nginx.resources | nindent 12 }}
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d      
+      - name: php-fpm
+        image: "{{ .Values.php.image.repository }}:{{ .Values.php.image.tag }}"
+        ports:
+        - containerPort: 9000
+        resources:
+          {{- toYaml .Values.php.resources | nindent 12 }}
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  nginx.conf: |
+    server {
+      listen 80;
+
+      location / {
+        # Replace "php-fpm:9000" with the actual service name and port of your php-fpm deployment
+        proxy_pass http://php-fpm:9000;
+        # Adjust these settings based on your application's requirements
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+      }
+    }
