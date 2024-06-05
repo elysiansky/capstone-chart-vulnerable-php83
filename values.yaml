@@ -6,7 +6,7 @@ image:
   repository: nginx
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: 058facb
 
 imagePullSecrets: []
 nameOverride: ""
@@ -108,7 +108,7 @@ nginx:
   replicas: 1
   image:
     repository: capstone-vulnerable-nginx
-    tag: latest
+    tag: 058facb
   service:
     type: ClusterIP
   resources:
@@ -123,7 +123,7 @@ php:
   replicas: 1
   image:
     repository: capstone-vulnerable-php83
-    tag: latest
+    tag: 058facb
   service:
     type: ClusterIP
   resources:
