@@ -6,7 +6,7 @@ image:
   repository: nginx
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 5561948-amd64
+  tag: ee74726-amd64
 
 imagePullSecrets: []
 nameOverride: ""
@@ -108,7 +108,7 @@ nginx:
   replicas: 2
   image:
     repository: elysiansky/capstone-vulnerable-nginx
-    tag: 5561948-amd64
+    tag: ee74726-amd64
   service:
     type: ClusterIP
   resources:
@@ -123,7 +123,7 @@ php:
   replicas: 2
   image:
     repository: elysiansky/capstone-vulnerable-php83
-    tag: 5561948-amd64
+    tag: ee74726-amd64
   service:
     type: ClusterIP
   resources:
