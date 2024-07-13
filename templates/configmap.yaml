@@ -6,12 +6,25 @@ data:
   nginx.conf: |
     server {
       listen 80;
+      server_name localhost;
+
+      root /var/www/html;
+      index index.php index.html index.htm;
 
       location / {
-        # Replace "php-fpm:9000" with the actual service name and port of your php-fpm deployment
-        proxy_pass http://php-fpm:9000;
-        # Adjust these settings based on your application's requirements
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
+          try_files $uri $uri/ /index.php?$query_string;
+      }
+
+      location ~ \.php$ {
+          include fastcgi_params;
+          fastcgi_pass php-fpm:9000;
+          fastcgi_index index.php;
+          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+          fastcgi_param PATH_INFO $fastcgi_script_name;
+      }
+
+      location ~ /\.ht {
+          deny all;
       }
     }
+

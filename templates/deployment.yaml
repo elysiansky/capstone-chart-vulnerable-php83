@@ -28,7 +28,7 @@ spec:
           {{- toYaml .Values.nginx.resources | nindent 12 }}
         volumeMounts:
         - name: nginx-config
-          mountPath: /etc/nginx/conf.d      
+          mountPath: /etc/nginx/conf.d 
       - name: php-fpm
         image: "{{ .Values.php.image.repository }}:{{ .Values.php.image.tag }}"
         ports:
