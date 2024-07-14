@@ -2,18 +2,19 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: capstone-chart-vulnerable-php83-nginx
+  namespace: capstone
   annotations:
-    konghq.com/strip-path: "true"  # This is the equivalent for rewriting paths in Kong
+    konghq.com/strip-path: 'true' # This is the equivalent for rewriting paths in Kong
 spec:
   ingressClassName: kong
   rules:
-  - host:
-    http:
-      paths:
-      - path: /php
-        pathType: Prefix
-        backend:
-          service:
-            name: capstone-chart-vulnerable-php83-nginx
-            port:
-              number: 80
+#    - host: example.com  # Replace with your actual domain or use a placeholder if testing locally
+      http:
+        paths:
+          - backend:
+              service:
+                name: capstone-chart-vulnerable-php83-nginx
+                port:
+                  number: 80
+            path: /php
+            pathType: Prefix
