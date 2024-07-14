@@ -4,10 +4,11 @@ metadata:
   name: capstone-chart-vulnerable-php83-nginx
   namespace: capstone
   annotations:
-    konghq.com/strip-path: 'true' # This is the equivalent for rewriting paths in Kong
+    konghq.com/strip-path: 'true'
 spec:
   ingressClassName: kong
   rules:
+    - host: localhost
       http:
         paths:
           - backend:
