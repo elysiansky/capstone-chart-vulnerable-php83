@@ -1,19 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: capstone-vulnerable-php83
+  name: capstone-chart-vulnerable-php83-nginx
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: kong
   rules:
-  - host: localhost
+  - host:
     http:
       paths:
       - path: /php
         pathType: Prefix
         backend:
           service:
-            name: capstone-chart-vulnerable-php83-service
+            name: capstone-chart-vulnerable-php83-nginx
             port:
               number: 80
