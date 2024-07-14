@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: capstone-chart-vulnerable-php83-nginx
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    konghq.com/strip-path: "true"  # This is the equivalent for rewriting paths in Kong
 spec:
   ingressClassName: kong
   rules:
