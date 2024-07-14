@@ -1,4 +1,4 @@
-{{- if .Values.ingress.enabled -}}
+{% comment %} {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "capstone-chart-vulnerable-php83.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
@@ -58,4 +58,4 @@ spec:
               {{- end }}
           {{- end }}
     {{- end }}
-{{- end }}
+{{- end }} {% endcomment %}
