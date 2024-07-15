@@ -5,7 +5,7 @@ metadata:
   name: {{ include "capstone-chart-vulnerable-php83.fullname" . }}-route
   namespace: {{ .Release.Namespace }}
   annotations:
-    konghq.com/strip-path: 'true'
+    {{ .Values.ingress.annotations }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   rules:
