@@ -43,15 +43,16 @@ service:
 
 ingress:
   enabled: true
-  className: ""
-  annotations: {}
+  className: "kong"
+  annotations:
+    konghq.com/strip-path: 'true'      
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: "*"
       paths:
-        - path: /
-          pathType: ImplementationSpecific
+        - path: /php
+          pathType: Exact
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

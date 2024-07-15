@@ -1,14 +1,18 @@
+{{- if .Values.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "capstone-chart-vulnerable-php83.fullname" . }}-route
   namespace: {{ .Release.Namespace }}
   annotations:
-    konghq.com/strip-path: 'true'
+    {{- if .Values.ingress.annotations }}
+    {{- toYaml .Values.ingress.annotations | nindent 4 }}
+    {{- end }} 
 spec:
-  ingressClassName: kong
+  ingressClassName: {{ .Values.ingress.className }}
   rules:
-    - http:
+    - host:
+      http:
         paths:
           - path: /php
             pathType: Exact
@@ -17,3 +21,4 @@ spec:
                 name: {{ include "capstone-chart-vulnerable-php83.fullname" . }}-nginx
                 port:
                   number: 80
+{{- end }}
