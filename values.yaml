@@ -9,8 +9,8 @@ image:
   tag: 7fe1673-amd64
 
 imagePullSecrets: []
-nameOverride: "capstone-vulnerable-php"
-fullnameOverride: "capstone-vulnerable-php"
+nameOverride: "capstone-vulnerable-php83"
+fullnameOverride: "capstone-vulnerable-php83"
 
 serviceAccount:
   # Specifies whether a service account should be created
