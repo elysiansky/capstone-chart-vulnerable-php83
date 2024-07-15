@@ -9,7 +9,7 @@ image:
   tag: aca683d-amd64
 
 imagePullSecrets: []
-nameOverride: "capstone-chart-vulnerable-php83-route"
+nameOverride: "capstone-chart-vulnerable-php83"
 fullnameOverride: "capstone-chart-vulnerable-php83"
 
 serviceAccount:
