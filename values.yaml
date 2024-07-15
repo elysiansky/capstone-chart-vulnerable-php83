@@ -9,8 +9,8 @@ image:
   tag: aca683d-amd64
 
 imagePullSecrets: []
-nameOverride: "capstone-chart-vulnerable-php83"
-fullnameOverride: "capstone-chart-vulnerable-php83"
+nameOverride: "capstone-php83"
+fullnameOverride: "capstone-php83"
 
 serviceAccount:
   # Specifies whether a service account should be created

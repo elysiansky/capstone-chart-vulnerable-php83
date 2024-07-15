@@ -2,7 +2,7 @@
     Expand the name of the chart.
     */}}
     {{- define "capstone-chart-vulnerable-php83.name" -}}
-    {{- default .Chart.Name (default "" .Values.nameOverride) | trunc 63 | trimSuffix "-" }}
+    {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
     {{- end }}
     
     {{/*
@@ -11,12 +11,12 @@
     If release name contains chart name it will be used as a full name.
     */}}
     {{- define "capstone-chart-vulnerable-php83.fullname" -}}
-    {{- if (default "" .Values.fullnameOverride) }}
+    {{- if .Values.fullnameOverride }}
     {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
     {{- else }}
-    {{- $name := default .Chart.Name (default "" .Values.nameOverride) }}
-    {{- if contains $name .Release.Name }}
-    {{- .Release.Name | trunc 63 | trimSuffix "-" }}
+    {{- $name := default .Chart.Name .Values.nameOverride }}
+    {{- if contains $name .Release.Name }}    
+    {{- printf "%s-%s" (truncate .Chart.Name 12 | trimSuffix "-") .Release.Name | trunc 63 | trimSuffix "-" }}
     {{- else }}
     {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
     {{- end }}
@@ -55,9 +55,9 @@
     */}}
     {{- define "capstone-chart-vulnerable-php83.serviceAccountName" -}}
     {{- if .Values.serviceAccount.create }}
-    {{- default (include "capstone-chart-vulnerable-php83.fullname" .) (default "" .Values.serviceAccount.name) }}
+    {{- default (include "capstone-chart-vulnerable-php83.fullname" .) .Values.serviceAccount.name }}
     {{- else }}
-    {{- default "default" (default "" .Values.serviceAccount.name) }}
+    {{- default "default" .Values.serviceAccount.name }}
     {{- end }}
     {{- end }}
     
