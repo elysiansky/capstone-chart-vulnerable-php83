@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "capstone-chart-vulnerable-php83.fullname" . }}-route
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.ingress.namespace }}
   annotations:
     konghq.com/strip-path: 'true'
 spec:
