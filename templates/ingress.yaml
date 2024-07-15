@@ -5,14 +5,11 @@ metadata:
   name: {{ include "capstone-chart-vulnerable-php83.fullname" . }}-route
   namespace: {{ .Release.Namespace }}
   annotations:
-    {{- if .Values.ingress.annotations }}
-    {{- toYaml .Values.ingress.annotations | nindent 4 }}
-    {{- end }}
+    konghq.com/strip-path: 'true'
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   rules:
-    - host:
-      http:
+    - http:
         paths:
           - path: /php
             pathType: Exact
