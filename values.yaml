@@ -49,16 +49,10 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host:
-      http:
-        paths:
-          - path: /php
-            pathType: Exact
-            backend:
-              service:
-                name: {{ include "capstone-chart-vulnerable-php83.fullname" . }}-nginx
-                port:
-                  number: 80
+    - host: "*"
+      paths:
+        - path: /php
+          pathType: Exact
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
