@@ -11,11 +11,11 @@ spec:
   rules:
     - http:
         paths:
-          - path: /php
-            pathType: Exact
+          - path: {{ .Values.ingress.hosts.paths.path }}
+            pathType: {{ .Values.ingress.hosts.paths.pathType }}
             backend:
               service:
                 name: {{ include "capstone-chart-vulnerable-php83.fullname" . }}-nginx
                 port:
-                  number: 80
+                  number: {{ .Values.ingress.hosts.paths.portNumber }}
 {{- end }}
