@@ -23,7 +23,7 @@ spec:
       - name: nginx
         image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
         ports:
-        - containerPort: 80
+        - containerPort: 80              
         resources:
           {{- toYaml .Values.nginx.resources | nindent 12 }}
         volumeMounts:
@@ -33,8 +33,10 @@ spec:
         image: "{{ .Values.php.image.repository }}:{{ .Values.php.image.tag }}"
         ports:
         - containerPort: 9000
+        env:
+          {{- toYaml .Values.php.env | nindent 10 }}
         resources:
-          {{- toYaml .Values.php.resources | nindent 12 }}
+          {{- toYaml .Values.php.resources | nindent 12 }}        
       volumes:
       - name: nginx-config
         configMap:

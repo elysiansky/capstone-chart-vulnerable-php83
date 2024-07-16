@@ -121,6 +121,8 @@ nginx:
       memory: 128Mi
 
 php:
+  env:
+    PODSLEEP: "no"
   replicas: 2
   image:
     repository: elysiansky/capstone-vulnerable-php83
