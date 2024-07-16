@@ -122,7 +122,8 @@ nginx:
 
 php:
   env:
-    PODSLEEP: "no"
+    - name: PODSLEEP
+      value: 'no'
   replicas: 2
   image:
     repository: elysiansky/capstone-vulnerable-php83
